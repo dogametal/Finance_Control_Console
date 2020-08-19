@@ -44,10 +44,28 @@ public class filter extends UI {
 				System.out.println();
 				System.out.println();
 								
-				System.out.println("Click ENTER to go back menu:");
-				goMenu.nextLine();
-				
-				UI.menuPrincipal();
+				System.out.println("Operation : ");
+				System.out.println();
+				System.out.println("[1] Menu Principal     [2] Add Record     [3] Delete Record  ");
+				System.out.println();
+				System.out.print("Enter the option :");
+				String sOp = goMenu.nextLine();
+				if (sOp.equals("1")) {
+					UI.menuPrincipal();
+				}
+				else if (sOp.equals("2")){
+					Operator.addCount();
+				}
+				else if (sOp.equals("3")) {
+					Operator.deleteCount();
+				}
+				else {
+					
+					System.out.println("Invalid Operation");
+					goMenu.nextLine();
+					UI.menuPrincipal();					
+				}
+
 	
 				//break;
 	
@@ -245,6 +263,6 @@ public class filter extends UI {
 		System.out.println("");
 		System.out.println("----------------------------------");
 		System.out.printf("Total de R$ : %.2f%n", amount);
-
+		sc.close();
 	}
 }

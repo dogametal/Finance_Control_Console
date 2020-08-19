@@ -1,6 +1,9 @@
 package entities;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.Scanner;
 
 public class ReadFile {
 
@@ -9,6 +12,7 @@ public class ReadFile {
 	public ReadFile(String character) {
 		this.character = character;
 	}
+
 
 	public String getCharacter(int numberofcharacter, int i1, int i2, int i3, int i4, String soption, double svalue) {
 		int initial = 0;
@@ -56,7 +60,41 @@ public class ReadFile {
 		return sword + blankspace;
 	}
 
-
+	public String spaceInZero(String sword, int space ) {
+		int size = sword.length();
+		int i = 1;
+		int f = space - size;
+		String blankspace = "0";
+		
+		for (i=1;i<f;i++) {
+			blankspace = blankspace + "0";
+		}
+		return blankspace + sword;
+	}	
+	
+	
+	public String GetIdReadFile(String path) {
+		String id = null;
+		File file = new File(path);
+		Scanner sc = null;
+		try {
+			sc = new Scanner(file);
+			while (sc.hasNextLine()) {
+				id = sc.nextLine().substring(0, 5);
+				
+				//System.out.println(id.length());
+			}
+			//System.out.println(id);			
+			
+		} catch (IOException e) {
+			System.out.println("Error: " + e.getMessage());
+		} finally {
+			if (sc != null) {
+				sc.close();
+			}
+		}
+		return id;
+	}
 	
 	
 }
