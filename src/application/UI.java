@@ -1,10 +1,13 @@
 package application;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
+
+import form.filter;
 
 public class UI {
 
@@ -27,16 +30,17 @@ public class UI {
 	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
 	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 	
+	public Scanner scanner = new Scanner(System.in);
 	public static void clearScreen() {
 		System.out.print("\033[H\033[2J");
 		System.out.flush();
 	}	
 
-	public static void menuPrincipal () {
+	public static void menuPrincipal () throws Exception {
 		Locale.setDefault(Locale.US);
 		Scanner scan = new Scanner(System.in);
 		String soption;
-		
+		clearScreen();
 		List<String> list = new ArrayList<>();
 		list.add("001 - Categorias");
 		list.add("002 - Planejamento Mensal");
@@ -58,9 +62,15 @@ public class UI {
 			throw new InputMismatchException("Error : " + e.getMessage());
 		}
 	}
+	//Avoid fail Menu option
+	public static void loopMenu (String soption) throws Exception {
 	
-	public static void loopMenu (String sc) {
-		clearScreen();
-		menuPrincipal();
+		String type = soption;	
+		//Chosen Menu operation valid
+		while (!type.equals("001") && !type.equals("002") && !type.equals("003") && !type.equals("004")){		
+			menuPrincipal();			
+		}		
+		filter.receiveFilter(type);
+		
 	}
 }
