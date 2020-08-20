@@ -29,7 +29,8 @@ public class Operator extends ReadFile {
 		
 		String newreg = reg.nextLine();
 		//Validate
-		
+		String[] vect = newreg.split(";");
+		String sName = vect[1];		
 		//Insert 
 		//New ID
 		String opFile = "C:\\Backup_Douglas\\Biblioteca\\Eclipse\\Plan_Custos\\DB\\Withdraw.txt";
@@ -42,7 +43,9 @@ public class Operator extends ReadFile {
 		System.out.println("Success : " + id +";"+ newreg);
 		System.out.print("Are you sure to create this new record right now : Y or N ?");
 		String sResponse = reg.nextLine().toUpperCase();
-		if (sResponse.equals("Y")) {
+		
+		
+		if (sResponse.equals("Y") && readfile.GetValidate(sName)) {
 			//Insert new record
 			addLineFile(opFile, id +";"+ newreg);			
 			System.out.print("Record save as success !");
@@ -51,6 +54,13 @@ public class Operator extends ReadFile {
 			System.out.println("Click ENTER to go back menu:");
 			reg.nextLine();
 			UI.menuPrincipal();			
+		}
+		if (!readfile.GetValidate(sName)) {
+			System.out.println("Invalid category make sure the right name.");
+			System.out.println();
+			System.out.println("Click ENTER to go back menu:");
+			reg.nextLine();
+			UI.menuPrincipal();
 		}
 		else {
 		UI.menuPrincipal();
