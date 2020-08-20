@@ -29,7 +29,8 @@ public class ReadFile {
 		if (soption.equals("001")) {
 			word1 = spaceInBlank(vect[0],i1);
 			word2 = spaceInBlank(vect[1],i2);
-			return word1 + word2;
+			word3 = spaceInBlank(vect[2],i5); 
+			return word1 + word2 + word3;
 		}
 		if (soption.equals("002")) {
 			word1 = spaceInBlank(vect[1],i1);
@@ -101,14 +102,14 @@ public class ReadFile {
 	}	
 	
 	
-	public String GetIdReadFile(String path) {
+	public String GetIdReadFile(String path, int size) {
 		String id = null;
 		File file = new File(path);
 		Scanner sc = null;
 		try {
 			sc = new Scanner(file);
 			while (sc.hasNextLine()) {
-				id = sc.nextLine().substring(0, 5);
+				id = sc.nextLine().substring(0, size);
 				
 				//System.out.println(id.length());
 			}
@@ -124,5 +125,39 @@ public class ReadFile {
 		return id;
 	}
 	
+	public boolean GetValidate(String sName) {
+		File file = new File("C:\\Backup_Douglas\\Biblioteca\\Eclipse\\Plan_Custos\\DB\\Categories.txt");
+		String id = null;
+		Scanner sc = null;
+		int size = sName.length()+4;
+
+		try {
+			sc = new Scanner(file);
+			while (sc.hasNextLine()) {
+				
+				id = sc.nextLine();
+				
+				if (id.length()>=size) {
+				
+					id = id.substring(4, size);
+					
+					if (id.equals(sName)) {
+						
+						return true;
+					}					
+				}
+
+			}		
+			
+			
+		} catch (IOException e) {
+			System.out.println("Error: " + e.getMessage());
+		} finally {
+			if (sc != null) {
+				sc.close();
+			}
+		}
+		return false;
+	}
 	
 }

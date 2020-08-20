@@ -6,6 +6,7 @@ import java.util.Scanner;
 import application.UI;
 import entities.ReadFile;
 
+
 public class filter extends UI {
 
 	public filter() {
@@ -30,13 +31,31 @@ public class filter extends UI {
 			case "002":
 				File file2 = new File("C:\\Backup_Douglas\\Biblioteca\\Eclipse\\Plan_Custos\\DB\\Plan.txt");
 				printPlanCustos(file2, sOption);
+
 				System.out.println();
 				System.out.println();
 								
-				System.out.println("Click ENTER to go back menu:");
-				goMenu.nextLine();
-				
-				UI.menuPrincipal();
+				System.out.println("Operation : ");
+				System.out.println();
+				System.out.println("[1] Menu Principal     [2] Add Record     [3] Delete Record  ");
+				System.out.println();
+				System.out.print("Enter the option :");
+				String sOp2 = goMenu.nextLine();
+				if (sOp2.equals("1")) {
+					UI.menuPrincipal();
+				}
+				else if (sOp2.equals("2")){
+					Operator.addCountPlan();
+				}
+				else if (sOp2.equals("3")) {
+					Operator.deletePlan();
+				}
+				else {
+					
+					System.out.println("Invalid Operation");
+					goMenu.nextLine();
+					UI.menuPrincipal();					
+				}				
 	
 			case "003":
 				File file3 = new File("C:\\Backup_Douglas\\Biblioteca\\Eclipse\\Plan_Custos\\DB\\Withdraw.txt");
@@ -163,7 +182,7 @@ public class filter extends UI {
 		System.out.printf("Withdraw  : $  %.2f%n", withdraw);
 		System.out.printf("Result    : $  %.2f%n", (amount-withdraw));
 
-
+		sc.close();
 	}
 	
 	public static void printCategories(File sfile, String soption) throws Exception {
@@ -173,16 +192,16 @@ public class filter extends UI {
 		int c = 0;
 		Scanner sc = new Scanner(sfile).useDelimiter("\\;");
 		System.out.println();
-		System.out.println("Code      Description ");
-		System.out.println("----------------------------------");
+		System.out.println("Code      Description            Order ID");
+		System.out.println("-----------------------------------------");
 		while (sc.hasNextLine()) {
 			character = sc.nextLine();
 			numberofcharacter = (character.length());
 			String[] vect = character.split(";");
 			ReadFile readfile = new ReadFile(character);
-			System.out.println(readfile.getCharacter(numberofcharacter, 10, 25, 0, 0, soption,0.00,0));
+			System.out.println(readfile.getCharacter(numberofcharacter, 10, 25, 0, 0, soption,0.00,3));
 		}
-		System.out.println("----------------------------------");
+		System.out.println("-----------------------------------------");
 	}
 	
 	public static void printPlanCustos(File sfile, String soption) throws Exception {
@@ -221,6 +240,7 @@ public class filter extends UI {
 		System.out.println("");
 		System.out.println("------------------------------------------");
 		System.out.printf("Total de R$ : %.2f%n", amount);
+		sc.close();
 	}	
 
 	public static void printWithDraw(File sfile, String soption) throws Exception {
