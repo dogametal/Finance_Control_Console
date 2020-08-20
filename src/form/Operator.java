@@ -94,12 +94,12 @@ public class Operator extends ReadFile {
 			File sFile = new File("C:\\Backup_Douglas\\Biblioteca\\Eclipse\\Plan_Custos\\DB\\WithDraw_New.txt");
 			File sFileDest = new File("C:\\Backup_Douglas\\Biblioteca\\Eclipse\\Plan_Custos\\DB\\WithDraw.txt");
 			changeLine(opFile, deleteReg);						
-			System.out.print("Record deleted as success !");
 			System.out.println();
-			
 			System.out.println("Click ENTER to go back menu:");
-			reg.nextLine();
-			PerformDelete();
+			if (performDelete()) {
+				System.out.print("Record deleted as success !");
+			}
+			reg.nextLine();			
 			sFile.renameTo(sFileDest);
 			UI.menuPrincipal();			
 		}
@@ -159,16 +159,16 @@ public class Operator extends ReadFile {
 	    } 
 	
 	}
-	public static void PerformDelete() {
+	public static boolean performDelete() {
 	    File myObj = new File("C:\\Backup_Douglas\\Biblioteca\\Eclipse\\Plan_Custos\\DB\\WithDraw_New.txt"); 
 	    File myOriginObj = new File("C:\\Backup_Douglas\\Biblioteca\\Eclipse\\Plan_Custos\\DB\\WithDraw.txt");
 	    
 	    if (myOriginObj.delete()) { 
-	    	//System.out.println("OK - Renewed");
-	    } else {
-	    	//System.out.println("Failed");
-	    } 
-	
+	    	//
+	    	return true;
+	    }
+	     
+	return false;
 	}
 	
 }

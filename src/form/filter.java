@@ -141,17 +141,17 @@ public class filter extends UI {
 					combinationaux = (combinationaux.substring(8, 14));
 					
 					//System.out.println(vect[0]);
-					if (combinationaux.equals(sdata)&&vectaux[2].equals(vect[0])) {
+					if (combinationaux.equals(sdata)&&vectaux[2].equals(vect[1])) {
 						priceaux =vectaux[3];
 						amountaux += Double.valueOf(priceaux);
 					}
 				}
 				//System.out.println(amountaux);
 
-				price = vect[1];
+				price = vect[2];
 				ReadFile readfile = new ReadFile(character);
 				amount += Double.valueOf(price);
-				System.out.println(readfile.getCharacter(numberofcharacter, 25, 15, 0, 0, soption,amountaux));
+				System.out.println(readfile.getCharacter(numberofcharacter, 25, 15, 0, 0, soption,amountaux,8));
 				withdraw +=amountaux;
 				//auxsc.close();
 			}
@@ -180,9 +180,9 @@ public class filter extends UI {
 			numberofcharacter = (character.length());
 			String[] vect = character.split(";");
 			ReadFile readfile = new ReadFile(character);
-			System.out.println(readfile.getCharacter(numberofcharacter, 10, 25, 0, 0, soption,0.00));
+			System.out.println(readfile.getCharacter(numberofcharacter, 10, 25, 0, 0, soption,0.00,0));
 		}
-
+		System.out.println("----------------------------------");
 	}
 	
 	public static void printPlanCustos(File sfile, String soption) throws Exception {
@@ -200,8 +200,8 @@ public class filter extends UI {
 		System.out.print("Digite o ano (ex.2020) : ");
 		year = filter.nextLine();
 		System.out.println();
-		System.out.println("Description              Amount ");
-		System.out.println("----------------------------------");
+		System.out.println("Code    Description              Amount ");
+		System.out.println("------------------------------------------");
 		while (sc.hasNextLine()) {
 			character = sc.nextLine();
 			numberofcharacter = (character.length());
@@ -212,14 +212,14 @@ public class filter extends UI {
 			String sdata = month + year;
 
 			if (combination.equals(sdata)) {
-				price = vect[1];
+				price = vect[2];
 				ReadFile readfile = new ReadFile(character);
 				amount += Double.valueOf(price);
-				System.out.println(readfile.getCharacter(numberofcharacter, 25, 10, 0, 0, soption,0.00));
+				System.out.println(readfile.getCharacter(numberofcharacter, 25, 10, 0, 0, soption,0.00,8));
 			}
 		}
 		System.out.println("");
-		System.out.println("----------------------------------");
+		System.out.println("------------------------------------------");
 		System.out.printf("Total de R$ : %.2f%n", amount);
 	}	
 
@@ -255,7 +255,7 @@ public class filter extends UI {
 				price = vect[3];
 				ReadFile readfile = new ReadFile(character);
 				amount += Double.valueOf(price);
-				System.out.println(readfile.getCharacter(numberofcharacter, 8, 10, 25, 10, soption,0.00));
+				System.out.println(readfile.getCharacter(numberofcharacter, 8, 10, 25, 10, soption,0.00,0));
 				
 			}
 

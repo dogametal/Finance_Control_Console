@@ -14,20 +14,40 @@ public class ReadFile {
 	}
 
 
-	public String getCharacter(int numberofcharacter, int i1, int i2, int i3, int i4, String soption, double svalue) {
+	public String getCharacter(int numberofcharacter, int i1, int i2, int i3, int i4, String soption, double svalue, int i5) {
 		int initial = 0;
 		int lfinal = 0;
 		// return character;
 		String[] vect = character.split(";");
-		String word1 = spaceInBlank(vect[0],i1);
-		String word2 = spaceInBlank(vect[1],i2);
+		String word1 = null;
+		String word2 = null;
+		String word3 = null;	
+		String word4 = null;
+		String word5 = null;
+
+		//Categories
+		if (soption.equals("001")) {
+			word1 = spaceInBlank(vect[0],i1);
+			word2 = spaceInBlank(vect[1],i2);
+			return word1 + word2;
+		}
+		if (soption.equals("002")) {
+			word1 = spaceInBlank(vect[1],i1);
+			word2 = spaceInBlank(vect[2],i2);
+			word5 =spaceInBlank(vect[0],i5);
+			return word5 + word1 + word2;
+		}
+		
 		if (soption.equals("003")) {
-			String word3 = spaceInBlank(vect[2],i3);	
-			String word4 = spaceInBlank(vect[3],i4);
+			word1 = spaceInBlank(vect[0],i1);
+			word2 = spaceInBlank(vect[1],i2);
+			word3 = spaceInBlank(vect[2],i3);	
+			word4 = spaceInBlank(vect[3],i4);
 			return word1 + word2 + word3 + word4;
 		}
 		if (soption.equals("004")) {
-			
+			word1 = spaceInBlank(vect[1],i1);
+			word2 = spaceInBlank(vect[2],i2);			
 			String strvalue = String.valueOf(svalue);
 			strvalue = spaceInBlank(strvalue,10);
 			
@@ -39,7 +59,7 @@ public class ReadFile {
 		}		
 		
 		
-		return word1 + word2;
+		return null;
 		
 	}
 
