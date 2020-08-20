@@ -48,13 +48,21 @@ public class ReadFile {
 		if (soption.equals("004")) {
 			word1 = spaceInBlank(vect[1],i1);
 			word2 = spaceInBlank(vect[2],i2);			
+			DecimalFormat formato = new DecimalFormat ("#.##");
+			
+			svalue = Double.valueOf(formato.format(svalue));
+			
 			String strvalue = String.valueOf(svalue);
+			
+			
 			strvalue = spaceInBlank(strvalue,10);
 			
 			double Account2 = Double.valueOf(word2)-svalue;
+
 			
-			DecimalFormat formato = new DecimalFormat ("#.##");
 			Account2 = Double.valueOf(formato.format(Account2));
+
+
 			return word1 + word2 + strvalue +  Account2;
 		}		
 		
