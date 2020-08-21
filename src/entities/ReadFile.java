@@ -66,7 +66,26 @@ public class ReadFile {
 
 			return word1 + word2 + strvalue +  Account2;
 		}		
-		
+		//Anual
+		if (soption.equals("005")) {
+			word2 = spaceInBlank(vect[1],i2);
+			//Running month to have information data
+			String month = null;
+			for (int i = 1; i <= 12;i++) {
+				if (i < 10) {
+					month = "0" + String.valueOf(i);	
+				}
+				else {
+					month = String.valueOf(i);
+				}
+				
+			
+				
+				
+			}
+			
+			return word2;
+		}
 		
 		return null;
 		

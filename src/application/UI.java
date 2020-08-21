@@ -42,8 +42,8 @@ public class UI {
 		String soption;
 		clearScreen();
 		List<String> list = new ArrayList<>();
-		list.add("001 - Categorias");
-		list.add("002 - Planejamento Mensal");
+		list.add("001 - Categorias                        005 - Planejamento Anual");
+		list.add("002 - Planejamento Mensal               006 - Saldo Orcamento Anual");
 		list.add("003 - Gastos diarios");
 		list.add("004 - Custos Vs Planejamento Mensal");
 		// list.add(2,"00 - Custos Vs Planejamento Mensal");
@@ -67,7 +67,7 @@ public class UI {
 	
 		String type = soption;	
 		//Chosen Menu operation valid
-		while (!type.equals("001") && !type.equals("002") && !type.equals("003") && !type.equals("004")){		
+		while (!type.equals("001") && !type.equals("002") && !type.equals("003") && !type.equals("004") && !type.equals("005")){		
 			menuPrincipal();			
 		}		
 		filter.receiveFilter(type);
