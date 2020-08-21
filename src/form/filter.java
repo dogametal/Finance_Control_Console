@@ -30,7 +30,8 @@ public class filter extends UI {
 	
 			case "002":
 				File file2 = new File("C:\\Backup_Douglas\\Biblioteca\\Eclipse\\Plan_Custos\\DB\\Plan.txt");
-				printPlanCustos(file2, sOption);
+				File fileValid = new File ("C:\\Backup_Douglas\\Biblioteca\\Eclipse\\Plan_Custos\\DB\\Categories.txt");
+				printPlanCustos(file2, sOption, fileValid);
 
 				System.out.println();
 				System.out.println();
@@ -59,6 +60,7 @@ public class filter extends UI {
 	
 			case "003":
 				File file3 = new File("C:\\Backup_Douglas\\Biblioteca\\Eclipse\\Plan_Custos\\DB\\Withdraw.txt");
+				
 				printWithDraw(file3, sOption);
 				System.out.println();
 				System.out.println();
@@ -90,7 +92,8 @@ public class filter extends UI {
 	
 			case "004":
 				File file4 = new File("C:\\Backup_Douglas\\Biblioteca\\Eclipse\\Plan_Custos\\DB\\Plan.txt");
-				printPlanVsWithDraw(file4, sOption);
+				File fileValid1 = new File ("C:\\Backup_Douglas\\Biblioteca\\Eclipse\\Plan_Custos\\DB\\Categories.txt");
+				printPlanVsWithDraw(file4, sOption, fileValid1);
 				System.out.println();
 				System.out.println();
 								
@@ -109,8 +112,8 @@ public class filter extends UI {
 		}
 	}
 
-	public static void printPlanVsWithDraw(File sfile, String soption) throws Exception {
-
+	public static void printPlanVsWithDraw(File sfile, String soption, File sVal) throws Exception {
+		String category = null;
 		String character = null;
 		String characteraux = null;
 		String price = null;
@@ -119,6 +122,7 @@ public class filter extends UI {
 		double amount = 0;
 		double amountaux = 0;
 		double withdraw=0;
+		int start = 0;
 		int numberofcharacter = 0;
 		int numberofcharacteraux = 0;
 		int l = 0;
@@ -126,7 +130,7 @@ public class filter extends UI {
 
 		File filewithdraw = new File(
 				"C:\\\\Backup_Douglas\\\\Biblioteca\\\\Eclipse\\\\Plan_Custos\\\\DB\\\\Withdraw.txt");
-
+		Scanner sValid = new Scanner(sVal).useDelimiter("\\;");
 		Scanner filter = new Scanner(System.in);
 		Scanner sc = new Scanner(sfile).useDelimiter("\\;");
 		// Scanner auxsc = new Scanner(filewithdraw);
@@ -138,51 +142,68 @@ public class filter extends UI {
 		System.out.println();
 		System.out.println("Description              Amount        Withdraw  Result");
 		System.out.println("---------------------------------------------------------");
-		while (sc.hasNextLine()) {
-			character = sc.nextLine();
-			numberofcharacter = (character.length());
-			String[] vect = character.split(";");
-			combination = character.replace(";", "");
-			combination = (combination.substring(combination.length() - 6, combination.length()));
-
-			String sdata = month + year;
-
-			if (combination.equals(sdata)) {
-				Scanner auxsc = new Scanner(filewithdraw);
-				amountaux = 0;
-
-				// Logic to get information of withdraw
-				while (auxsc.hasNextLine()) {
-					characteraux = auxsc.nextLine();
-					numberofcharacteraux = (characteraux.length());
-					String[] vectaux = characteraux.split(";");
-					combinationaux = characteraux.replace(".", "");
-					combinationaux = (combinationaux.substring(8, 14));
-					
-					//System.out.println(vect[0]);
-					if (combinationaux.equals(sdata)&&vectaux[2].equals(vect[1])) {
-						priceaux =vectaux[3];
-						amountaux += Double.valueOf(priceaux);
-					}
+		try {
+			while (sValid.hasNextLine()) {
+				if (start>0){
+					sc = new Scanner(sfile).useDelimiter("\\;");		
 				}
-				//System.out.println(amountaux);
-
-				price = vect[2];
-				ReadFile readfile = new ReadFile(character);
-				amount += Double.valueOf(price);
-				System.out.println(readfile.getCharacter(numberofcharacter, 25, 15, 0, 0, soption,amountaux,8));
-				withdraw +=amountaux;
-				//auxsc.close();
-			}
+				category = sValid.nextLine();
+				String[] vectValid = category.split(";");				
+				category = vectValid[1];			
+				while (sc.hasNextLine()) {
+					character = sc.nextLine();
+					numberofcharacter = (character.length());
+					String[] vect = character.split(";");
+					combination = character.replace(";", "");
+					combination = (combination.substring(combination.length() - 6, combination.length()));
+					String sdata = month + year;
+					if (vect[1].equals(category)) {
+						if (combination.equals(sdata)) {
+							Scanner auxsc = new Scanner(filewithdraw);
+							amountaux = 0;
 			
+							// Logic to get information of withdraw
+							while (auxsc.hasNextLine()) {
+								characteraux = auxsc.nextLine();
+								numberofcharacteraux = (characteraux.length());
+								String[] vectaux = characteraux.split(";");
+								combinationaux = characteraux.replace(".", "");
+								combinationaux = (combinationaux.substring(8, 14));
+								
+								//System.out.println(vect[0]);
+								if (combinationaux.equals(sdata)&&vectaux[2].equals(vect[1])) {
+									priceaux =vectaux[3];
+									amountaux += Double.valueOf(priceaux);
+								}
+							}
+							//System.out.println(amountaux);
+			
+							price = vect[2];
+							ReadFile readfile = new ReadFile(character);
+							amount += Double.valueOf(price);
+							System.out.println(readfile.getCharacter(numberofcharacter, 25, 15, 0, 0, soption,amountaux,8));
+							withdraw +=amountaux;
+							//auxsc.close();
+						}
+					
+					}
+	
+				}
+				start+=1;
+				sc.close();
+			}
 		}
+		catch(RuntimeException e) {
+			e.printStackTrace();
+		}
+		
 		System.out.println("");
 		System.out.println("---------------------------------------------------------");
 		System.out.printf("Budget    : $  %.2f%n", amount);
 		System.out.printf("Withdraw  : $  %.2f%n", withdraw);
 		System.out.printf("Result    : $  %.2f%n", (amount-withdraw));
 
-		sc.close();
+		
 	}
 	
 	public static void printCategories(File sfile, String soption) throws Exception {
@@ -204,15 +225,18 @@ public class filter extends UI {
 		System.out.println("-----------------------------------------");
 	}
 	
-	public static void printPlanCustos(File sfile, String soption) throws Exception {
+	public static void printPlanCustos(File sfile, String soption, File sVal) throws Exception {
+		String category = null;
 		String character = null;
 		String price = null;
-		String month, year, combination;
+		String month, year, combination;		
 		double amount = 0;
+		int start = 0;
 		int numberofcharacter = 0;
 		int l = 0;
 		int c = 0;
-		Scanner filter = new Scanner(System.in);
+		Scanner filter = new Scanner(System.in);	
+		Scanner sValid = new Scanner(sVal).useDelimiter("\\;");
 		Scanner sc = new Scanner(sfile).useDelimiter("\\;");
 		System.out.print("Digite o mes (ex.08) : ");
 		month = filter.nextLine();
@@ -221,21 +245,40 @@ public class filter extends UI {
 		System.out.println();
 		System.out.println("Code    Description              Amount ");
 		System.out.println("------------------------------------------");
-		while (sc.hasNextLine()) {
-			character = sc.nextLine();
-			numberofcharacter = (character.length());
-			String[] vect = character.split(";");
-			combination = character.replace(";", "");
-			combination = (combination.substring(combination.length() - 6, combination.length()));
-
-			String sdata = month + year;
-
-			if (combination.equals(sdata)) {
-				price = vect[2];
-				ReadFile readfile = new ReadFile(character);
-				amount += Double.valueOf(price);
-				System.out.println(readfile.getCharacter(numberofcharacter, 25, 10, 0, 0, soption,0.00,8));
+		try {
+			while (sValid.hasNextLine()) {
+			if (start>0){
+				sc = new Scanner(sfile).useDelimiter("\\;");		
 			}
+			category = sValid.nextLine();
+			//System.out.println(category);
+			
+			String[] vectValid = category.split(";");
+					
+			category = vectValid[1];
+			
+				while (sc.hasNextLine()) {
+					character = sc.nextLine();
+					numberofcharacter = (character.length());
+					String[] vect = character.split(";");
+					combination = character.replace(";", "");
+					combination = (combination.substring(combination.length() - 6, combination.length()));
+					String sdata = month + year;
+					if (vect[1].equals(category)) {
+						if (combination.equals(sdata)) {
+							price = vect[2];
+							ReadFile readfile = new ReadFile(character);
+							amount += Double.valueOf(price);
+							System.out.println(readfile.getCharacter(numberofcharacter, 25, 10, 0, 0, soption,0.00,8));
+						}
+					}
+				}
+			start+=1;
+			sc.close();
+			}
+		}
+		catch(RuntimeException e) {
+			e.printStackTrace();
 		}
 		System.out.println("");
 		System.out.println("------------------------------------------");
