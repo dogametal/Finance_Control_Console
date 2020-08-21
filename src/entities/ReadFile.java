@@ -69,8 +69,13 @@ public class ReadFile {
 		//Anual
 		if (soption.equals("005")) {
 			word2 = spaceInBlank(vect[1],i2);
+			
 			//Running month to have information data
-			String month = null;
+			String month;
+			String year = String.valueOf(i5);
+			word3 ="";
+			int position = 8;
+			
 			for (int i = 1; i <= 12;i++) {
 				if (i < 10) {
 					month = "0" + String.valueOf(i);	
@@ -78,13 +83,12 @@ public class ReadFile {
 				else {
 					month = String.valueOf(i);
 				}
-				
-			
-				
-				
+
+			month = spaceInBlank(month + "-" + year, 9);
+			word3 +=month;
 			}
 			
-			return word2;
+			return word2 + word3;
 		}
 		
 		return null;
