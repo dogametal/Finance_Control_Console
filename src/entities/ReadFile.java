@@ -237,15 +237,17 @@ public class ReadFile {
 	public String getResultPlan(String parameter) {
 		File file = new File("C:\\Backup_Douglas\\Biblioteca\\Eclipse\\Plan_Custos\\DB\\Plan.txt");
 		
-		String combination, month, find, result, word1;
+		String combination, month, find, result;
 		String id = "";
+		String bar = "| ";
 		String[] vect;
 		double plan = 0.0;
 		double total = 0.0;
+
 		Scanner sc = null;
 		result="";
 		
-
+		DecimalFormat formato = new DecimalFormat("#.##");
 		for (int i = 1; i <= 12;i++) {
 			if (i < 10) {
 				month = "0" + String.valueOf(i);	
@@ -269,13 +271,14 @@ public class ReadFile {
 						}	
 
 					}	
+					plan = Double.valueOf(formato.format(plan));
+					
 					month = String.valueOf(plan);
 					month = spaceInBlank(month, 9);
-					
-					//month = spaceInBlank(month + "-" + year, 9);
+
 					total +=plan;
 					result +=month;
-					//result+=result;					
+		
 			}
 			catch (IOException e) {
 				e.printStackTrace();
@@ -283,13 +286,13 @@ public class ReadFile {
 
 		
 		}
-		//word1 = String.valueOf(plan);
-		//result += result;
-		//result +=result;
-		
+
+		total = Double.valueOf(formato.format(total));
+
 		sc.close();
 
-		return "Result :              :" + result ; 
+		//return "Result :              :" + result + total ;
+		return "Result  :                " + result + bar + total ; 
 	}	
 
 	
