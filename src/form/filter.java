@@ -113,8 +113,21 @@ public class filter extends UI {
 				
 				UI.menuPrincipal();		
 				
+
+				
+			case "006":
+				File file6 = new File("C:\\Backup_Douglas\\Biblioteca\\Eclipse\\Plan_Custos\\DB\\Categories.txt");
+				printAnualWithDraw(file6, sOption);
+				System.out.println();
+				System.out.println();
+								
+				System.out.println("Click ENTER to go back menu:");
+				goMenu.nextLine();
+				
+				UI.menuPrincipal();		
+				
 			default:
-				break;
+				break;				
 	
 			}
 		}
@@ -341,6 +354,36 @@ public class filter extends UI {
 	}
 	
 	public static void printAnualPlan(File sfile, String soption) throws Exception {
+		String character = null;
+		int year = 0;
+		int numberofcharacter = 0;
+		int l = 0;
+		int c = 0;
+			
+		Scanner sc = new Scanner(sfile).useDelimiter("\\;");
+		Scanner filter = new Scanner(System.in);
+		System.out.print("Digite o ano (ex.2020) : ");
+		year = filter.nextInt();
+		System.out.println();		
+		//Header
+		System.out.println("Description              Jan      Fev      Mar      Abr      Mai      Jun      Jul      Ago      Set      Out      Nov      Dez      Total     ");
+		System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------");
+		while (sc.hasNextLine()) {
+			character = sc.nextLine();
+			numberofcharacter = (character.length());
+			String[] vect = character.split(";");
+			ReadFile readfile = new ReadFile(character);
+			System.out.println(readfile.getCharacter(numberofcharacter, 10, 25, 0, 0, soption,0.00,year));
+			
+		}
+		System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------");
+		System.out.println();
+		//Result
+		ReadFile readfile = new ReadFile("");
+		System.out.println(readfile.getResultPlan(String.valueOf(year)));
+	}
+	
+	public static void printAnualWithDraw(File sfile, String soption) throws Exception {
 		String character = null;
 		int year = 0;
 		int numberofcharacter = 0;

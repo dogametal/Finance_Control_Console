@@ -116,6 +116,68 @@ public class ReadFile {
 								
 				return word2 + word3 + bar + word4;
 		}
+			
+			//Anual
+			if (soption.equals("006")) {
+				word2 = spaceInBlank(vect[1],i2);
+				
+				//Running month to have information data
+				String month;
+				String year = String.valueOf(i5);
+				String bar = "| ";
+				double plan =0.0;
+				double withdraw =0.0;
+				double result= 0.0;
+				double total =0.0;
+				word3 ="";
+				int position = 8;
+				
+				for (int i = 1; i <= 12;i++) {
+					if (i < 10) {
+						month = "0" + String.valueOf(i);	
+					}
+					else {
+						month = String.valueOf(i);
+					}
+					
+					try {
+						//get Total Plan
+						plan = getAnualPlan(vect[1]+month+year, "Plan");	
+						//get Total Withdraw
+						//getAnualWithDraw
+						withdraw = getAnualWithDraw(vect[1]+month+year, "Plan"); 	
+					}
+					catch(RuntimeException e) {
+						e.printStackTrace();
+					}
+					
+					result = plan-withdraw;
+					
+					month = String.valueOf(result);
+					//reduce values
+					
+					month = spaceInBlank(month, 9);
+					
+					//Total Plan
+					total +=result;
+					//Reduce total available
+					
+					
+					word3 +=month;
+				
+					//plan +=plan;
+					//word3 = String.valueOf(plan);
+				}
+				DecimalFormat formato = new DecimalFormat("#.##");
+				//word4 = String.valueOf(formato.format(total));
+				word4 = String.valueOf(total);
+				total = Double.valueOf(word4);
+				total = Double.valueOf(formato.format(total));
+				word4 = String.valueOf(total);				
+				word4 = spaceInBlank(word4, 9);				
+								
+				return word2 + word3 + bar + word4;
+		}			
 		
 		return null;
 		
@@ -234,6 +296,43 @@ public class ReadFile {
 		return plan;
 	}	
 
+	public double getAnualWithDraw(String parameter, String type) {
+		File file = new File("C:\\Backup_Douglas\\Biblioteca\\Eclipse\\Plan_Custos\\DB\\WithDraw.txt");
+		String combination;
+		String id = "";
+		String[] vect;
+		String find;
+		String word1 = null;
+		double plan = 0.0;
+		Scanner sc = null;
+		
+		try {
+			sc = new Scanner(file);
+			while (sc.hasNextLine()) {				
+				id = sc.nextLine();				
+				vect = id.split(";");			
+				combination = id.replace(";", "");
+				word1 = vect[1].replace(".", "");
+				word1 = word1.substring(word1.length()-6, word1.length());
+				combination = vect[2] + word1;
+				if (combination.equals(parameter)) {
+					plan+=Double.valueOf(vect[3]);
+				}
+				//System.out.println(parameter + " to " +combination);
+				
+				
+			}						
+		} catch (IOException e) {
+			System.out.println("Error: " + e.getMessage());
+		} finally {
+			if (sc != null) {
+				sc.close();
+			}
+		}
+		sc.close();
+		return plan;
+	}	
+	
 	public String getResultPlan(String parameter) {
 		File file = new File("C:\\Backup_Douglas\\Biblioteca\\Eclipse\\Plan_Custos\\DB\\Plan.txt");
 		

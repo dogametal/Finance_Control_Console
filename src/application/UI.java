@@ -67,7 +67,7 @@ public class UI {
 	
 		String type = soption;	
 		//Chosen Menu operation valid
-		while (!type.equals("001") && !type.equals("002") && !type.equals("003") && !type.equals("004") && !type.equals("005")){		
+		while (!type.equals("001") && !type.equals("002") && !type.equals("003") && !type.equals("004") && !type.equals("005") && !type.equals("006")){		
 			menuPrincipal();			
 		}		
 		filter.receiveFilter(type);
