@@ -75,7 +75,9 @@ public class ReadFile {
 				//Running month to have information data
 				String month;
 				String year = String.valueOf(i5);
-				double plan =0;
+				String bar = "| ";
+				double plan =0.0;
+				double total =0.0;
 				word3 ="";
 				int position = 8;
 				
@@ -98,13 +100,21 @@ public class ReadFile {
 					month = spaceInBlank(month, 9);
 					
 					//month = spaceInBlank(month + "-" + year, 9);
-					
+					total +=plan;
 					word3 +=month;
+				
 					//plan +=plan;
 					//word3 = String.valueOf(plan);
 				}
-				
-				return word2 + word3;
+				DecimalFormat formato = new DecimalFormat("#.##");
+				//word4 = String.valueOf(formato.format(total));
+				word4 = String.valueOf(total);
+				total = Double.valueOf(word4);
+				total = Double.valueOf(formato.format(total));
+				word4 = String.valueOf(total);				
+				word4 = spaceInBlank(word4, 9);				
+								
+				return word2 + word3 + bar + word4;
 		}
 		
 		return null;
@@ -223,4 +233,65 @@ public class ReadFile {
 		sc.close();
 		return plan;
 	}	
+
+	public String getResultPlan(String parameter) {
+		File file = new File("C:\\Backup_Douglas\\Biblioteca\\Eclipse\\Plan_Custos\\DB\\Plan.txt");
+		
+		String combination, month, find, result, word1;
+		String id = "";
+		String[] vect;
+		double plan = 0.0;
+		double total = 0.0;
+		Scanner sc = null;
+		result="";
+		
+
+		for (int i = 1; i <= 12;i++) {
+			if (i < 10) {
+				month = "0" + String.valueOf(i);	
+			}
+			else {
+				month = String.valueOf(i);
+			}
+			
+			find = month + parameter;
+			
+			try {
+				sc = new Scanner(file);			
+				plan=0.0;
+					while (sc.hasNextLine()) {				
+						id = sc.nextLine();				
+						vect = id.split(";");			
+						combination = id.replace(";", "");
+						combination = (combination.substring(combination.length() - 6, combination.length()));
+						if (combination.equals(find)) {
+							plan+=Double.valueOf(vect[2]);
+						}	
+
+					}	
+					month = String.valueOf(plan);
+					month = spaceInBlank(month, 9);
+					
+					//month = spaceInBlank(month + "-" + year, 9);
+					total +=plan;
+					result +=month;
+					//result+=result;					
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		
+		}
+		//word1 = String.valueOf(plan);
+		//result += result;
+		//result +=result;
+		
+		sc.close();
+
+		return "Result :              :" + result ; 
+	}	
+
+	
+	
 }

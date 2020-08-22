@@ -353,8 +353,8 @@ public class filter extends UI {
 		year = filter.nextInt();
 		System.out.println();		
 		//Header
-		System.out.println("Description              Jan      Fev      Mar      Abr      Mai      Jun      Jul      Ago      Set      Out      Nov      Dez      ");
-		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------");
+		System.out.println("Description              Jan      Fev      Mar      Abr      Mai      Jun      Jul      Ago      Set      Out      Nov      Dez      Total     ");
+		System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------");
 		while (sc.hasNextLine()) {
 			character = sc.nextLine();
 			numberofcharacter = (character.length());
@@ -363,6 +363,10 @@ public class filter extends UI {
 			System.out.println(readfile.getCharacter(numberofcharacter, 10, 25, 0, 0, soption,0.00,year));
 			
 		}
-		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------");
+		System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------");
+		System.out.println();
+		//Result
+		ReadFile readfile = new ReadFile("");
+		System.out.println(readfile.getResultPlan(String.valueOf(year)));
 	}
 }
