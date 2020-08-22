@@ -394,6 +394,93 @@ public class ReadFile {
 		return "Result  :                " + result + bar + total ; 
 	}	
 
+	public String getResultWithDraw(String parameter) {
+		File file = new File("C:\\Backup_Douglas\\Biblioteca\\Eclipse\\Plan_Custos\\DB\\Plan.txt");
+		File fileW = new File("C:\\Backup_Douglas\\Biblioteca\\Eclipse\\Plan_Custos\\DB\\WithDraw.txt");
+		String combination, month, find, result, word1;
+		String id = "";
+		String bar = "| ";
+		String[] vect;
+		double plan = 0.0;
+		double withdraw = 0.0;
+		double subtotal = 0.0;
+		double total = 0.0;
+
+		Scanner sc = null;
+		Scanner scW = null;
+		result="";
+		
+		DecimalFormat formato = new DecimalFormat("#.##");
+		for (int i = 1; i <= 12;i++) {
+			if (i < 10) {
+				month = "0" + String.valueOf(i);	
+			}
+			else {
+				month = String.valueOf(i);
+			}
+			
+			find = month + parameter;
+			
+			try {
+				sc = new Scanner(file);			
+				plan=0.0;
+					//Values of Plan
+					while (sc.hasNextLine()) {				
+						id = sc.nextLine();				
+						vect = id.split(";");			
+						combination = id.replace(";", "");
+						combination = (combination.substring(combination.length() - 6, combination.length()));
+						if (combination.equals(find)) {
+							plan+=Double.valueOf(vect[2]);
+						}	
+
+					}
+					
+					//Values of WithDraw
+					scW = new Scanner(fileW);	
+					withdraw = 0.0;
+					while (scW.hasNextLine()) {
+						id = scW.nextLine();
+						vect = id.split(";");
+						combination = id.replace(";", "");
+						word1 = vect[1].replace(".", "");
+						word1 = word1.substring(word1.length()-6, word1.length());
+						//combination = vect[2] + word1;
+						combination = word1;
+						if (combination.equals(find)) {
+							withdraw+=Double.valueOf(vect[3]);
+						}							
+					}
+					
+					
+					//Make calculation
+					plan = Double.valueOf(formato.format(plan));
+					withdraw = Double.valueOf(formato.format(withdraw));
+					subtotal = plan - withdraw;
+					subtotal = Double.valueOf(formato.format(subtotal));
+					
+					month = String.valueOf(subtotal);
+					month = spaceInBlank(month, 9);
+
+					total +=subtotal;
+					result +=month;
+		
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		
+		}
+
+		total = Double.valueOf(formato.format(total));
+
+		sc.close();
+		scW.close();
+
+		//return "Result :              :" + result + total ;
+		return "Result  :                " + result + bar + total ; 
+	}	
 	
 	
 }

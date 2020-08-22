@@ -410,6 +410,6 @@ public class filter extends UI {
 		System.out.println();
 		//Result
 		ReadFile readfile = new ReadFile("");
-		System.out.println(readfile.getResultPlan(String.valueOf(year)));
+		System.out.println(readfile.getResultWithDraw(String.valueOf(year)));
 	}
 }
