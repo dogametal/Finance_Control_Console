@@ -127,10 +127,13 @@ public class ReadFile {
 				String bar = "| ";
 				double plan =0.0;
 				double withdraw =0.0;
+				double subtotal =0.0;
 				double result= 0.0;
 				double total =0.0;
 				word3 ="";
 				int position = 8;
+				
+				DecimalFormat formato = new DecimalFormat("#.##");
 				
 				for (int i = 1; i <= 12;i++) {
 					if (i < 10) {
@@ -150,8 +153,9 @@ public class ReadFile {
 					catch(RuntimeException e) {
 						e.printStackTrace();
 					}
+				
 					
-					result = plan-withdraw;
+					result = Double.valueOf(formato.format((plan-withdraw)));
 					
 					month = String.valueOf(result);
 					//reduce values
@@ -168,7 +172,7 @@ public class ReadFile {
 					//plan +=plan;
 					//word3 = String.valueOf(plan);
 				}
-				DecimalFormat formato = new DecimalFormat("#.##");
+				
 				//word4 = String.valueOf(formato.format(total));
 				word4 = String.valueOf(total);
 				total = Double.valueOf(word4);
@@ -456,10 +460,11 @@ public class ReadFile {
 					//Make calculation
 					plan = Double.valueOf(formato.format(plan));
 					withdraw = Double.valueOf(formato.format(withdraw));
-					subtotal = plan - withdraw;
+					subtotal = Double.valueOf(formato.format(plan - withdraw));
 					subtotal = Double.valueOf(formato.format(subtotal));
 					
 					month = String.valueOf(subtotal);
+					
 					month = spaceInBlank(month, 9);
 
 					total +=subtotal;
