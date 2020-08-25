@@ -1,4 +1,4 @@
-package entities;
+package entitites;
 
 public class WithDraw implements Comparable<WithDraw> {
 
@@ -29,7 +29,6 @@ public class WithDraw implements Comparable<WithDraw> {
 
 	@Override
 	public int compareTo(WithDraw other) {
-		// TODO Auto-generated method stub
 		return -parameter.compareTo(other.getParameter());
 	}
 	

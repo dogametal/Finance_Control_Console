@@ -1,11 +1,13 @@
 package form;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import application.UI;
 import entities.ReadFile;
-
+import entities.WithDraw;
 
 public class filter extends UI {
 
@@ -320,6 +322,7 @@ public class filter extends UI {
 		int c = 0;
 		Scanner filter = new Scanner(System.in);
 		Scanner sc = new Scanner(sfile).useDelimiter("\\;");
+		List<WithDraw> list = new ArrayList<>(); 
 		System.out.print("Digite o mes (ex.08) : ");
 		month = filter.nextLine();
 		System.out.print("Digite o ano (ex.2020) : ");
@@ -344,9 +347,13 @@ public class filter extends UI {
 				amount += Double.valueOf(price);
 				System.out.println(readfile.getCharacter(numberofcharacter, 8, 10, 25, 10, soption,0.00,0));
 				
-			}
-
+				//Add new record on List
+				
+			}			
 		}
+		//Create output from List
+		
+		
 		System.out.println("");
 		System.out.println("----------------------------------");
 		System.out.printf("Total de R$ : %.2f%n", amount);
