@@ -1,7 +1,9 @@
 package form;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -315,7 +317,7 @@ public class filter extends UI {
 	public static void printWithDraw(File sfile, String soption) throws Exception {
 		String character = null;
 		String price = null;
-		String month, year, combination;
+		String month, year, combination, parameter;
 		double amount = 0;
 		int numberofcharacter = 0;
 		int l = 0;
@@ -330,29 +332,46 @@ public class filter extends UI {
 		System.out.println();
 		System.out.println("Code    Data       Description             Amount ");
 		System.out.println("--------------------------------------------------------------------");
-		while (sc.hasNextLine()) {
-			//l = sc.nextInt();
-			//Starting function to remove line
-			l+=1;
-			character = sc.nextLine();
-			numberofcharacter = (character.length());
-			String[] vect = character.split(";");
-			combination = character.replace(".", "");
-			combination = combination.substring(8, 14);
-			String sdata = month + year;
-
-			if (combination.equals(sdata)) {
+		try {
+			while (sc.hasNextLine()) {
+				//l = sc.nextInt();
+				//Starting function to remove line
+				l+=1;
+				character = sc.nextLine();			
+				String[] vect = character.split(";");
+				combination = character.replace(".", "");
+				combination = combination.substring(8, 14);
+				price = vect[3];
+				String sdata = month + year;
+	
+				if (combination.equals(sdata)) {
+	
+					//System.out.println(readfile.getCharacter(numberofcharacter, 8, 10, 25, 10, soption,0.00,0));
+					
+					//Add new record on List
+					parameter = vect[1].replace(".", "")+ " " + vect[2] + " " + vect[3].replace(".","");
+					list.add(new WithDraw(parameter, character, Double.parseDouble(price)));
+				}			
+			}
+			
+			//Create output from List
+			System.out.println();
+			Collections.sort(list);
+			for (WithDraw draw : list) {
+				character = draw.getCharacter();
+				numberofcharacter = (character.length());
+				String[] vect = character.split(";");
 				price = vect[3];
 				ReadFile readfile = new ReadFile(character);
-				amount += Double.valueOf(price);
+				amount += Double.valueOf(price);		
 				System.out.println(readfile.getCharacter(numberofcharacter, 8, 10, 25, 10, soption,0.00,0));
-				
-				//Add new record on List
-				
-			}			
+				//System.out.println(draw.getParameter() + ", " + draw.getWithdraw());
+				//System.out.println(draw.getCharacter());
+			}
 		}
-		//Create output from List
-		
+		catch(RuntimeException e) {
+			e.printStackTrace();
+		}
 		
 		System.out.println("");
 		System.out.println("----------------------------------");

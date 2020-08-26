@@ -1,17 +1,29 @@
-package entitites;
+package entities;
 
 public class WithDraw implements Comparable<WithDraw> {
 
 	private String parameter;
+	private String character;
 	private Double withdraw;
 
-	public WithDraw(String parameter, Double withdraw) {
+	public WithDraw(String parameter, String character, Double withdraw) {
 		this.parameter = parameter;
 		this.withdraw = withdraw;
+		this.character = character;
 	}
 
 	public String getParameter() {
+		
 		return parameter;
+	}
+
+	public String getCharacter() {
+		return character;
+	}
+
+	
+	public void setCharacter(String character) {
+		this.character = character;
 	}
 
 	public void setParameter(String parameter) {
@@ -26,10 +38,16 @@ public class WithDraw implements Comparable<WithDraw> {
 		this.withdraw = withdraw;
 	}
 
+	
 
 	@Override
 	public int compareTo(WithDraw other) {
-		return -parameter.compareTo(other.getParameter());
+		//Decrescente Order signal -
+		//return -parameter.compareTo(other.getParameter());
+		//Crescente
+		return parameter.compareTo(other.getParameter());
+		
+		
 	}
 	
 	
