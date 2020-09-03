@@ -1,11 +1,11 @@
 package form;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Predicate;
 
 import application.UI;
 import entities.ReadFile;
@@ -317,18 +317,23 @@ public class filter extends UI {
 	public static void printWithDraw(File sfile, String soption) throws Exception {
 		String character = null;
 		String price = null;
+		String description = "*";
 		String month, year, combination, parameter;
 		double amount = 0;
 		int numberofcharacter = 0;
 		int l = 0;
 		int c = 0;
 		Scanner filter = new Scanner(System.in);
+		Scanner desc = new Scanner(System.in);
 		Scanner sc = new Scanner(sfile).useDelimiter("\\;");
 		List<WithDraw> list = new ArrayList<>(); 
 		System.out.print("Digite o mes (ex.08) : ");
 		month = filter.nextLine();
 		System.out.print("Digite o ano (ex.2020) : ");
 		year = filter.nextLine();
+		System.out.print("Optional Description : ");
+		description = desc.nextLine();
+		System.out.println();
 		System.out.println();
 		System.out.println("Code    Data       Description             Amount ");
 		System.out.println("--------------------------------------------------------------------");
@@ -343,7 +348,10 @@ public class filter extends UI {
 				combination = combination.substring(8, 14);
 				price = vect[3];
 				String sdata = month + year;
-	
+				
+				
+				// Here add new functionality finding for description or null for all
+
 				if (combination.equals(sdata)) {
 	
 					//System.out.println(readfile.getCharacter(numberofcharacter, 8, 10, 25, 10, soption,0.00,0));
@@ -351,6 +359,22 @@ public class filter extends UI {
 					//Add new record on List
 					parameter = vect[1].replace(".", "")+ " " + vect[2] + " " + vect[3].replace(".","");
 					list.add(new WithDraw(parameter, character, Double.parseDouble(price)));
+					
+					int nCharacter = description.length();
+					//String pred = character.substring(17, 17+nCharacter);
+					//System.out.println(pred);
+					
+					//sc.nextLine();
+					if (description !="*" || description !=null) {
+						Object obj = description.toUpperCase();
+						
+						
+						Predicate <WithDraw> pred = p ->  !p.getCharacter().substring(17, 17 + nCharacter).toUpperCase().equals(obj);
+
+						
+						list.removeIf(pred);						
+					}
+
 				}			
 			}
 			
@@ -375,7 +399,8 @@ public class filter extends UI {
 		
 		System.out.println("");
 		System.out.println("----------------------------------");
-		System.out.printf("Total de R$ : %.2f%n", amount);
+		System.out.printf("Total de R$ : %.2f%n", amount);		
+		
 		sc.close();
 	}
 	
